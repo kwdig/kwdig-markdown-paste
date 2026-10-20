@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict');
+const md=require('../assets/vendor/markdown-it.min.js');
+const convert=require('../assets/converter.js')(md);
+assert.equal(convert('一行目\n二行目','paragraphs'),'<p>一行目<br>\n二行目</p>\n');
+assert.equal(convert('第一段落\n\n第二段落','paragraphs'),'<p>第一段落</p>\n<p>第二段落</p>\n');
+assert.match(convert('## 見出し\n\n- A\n- B'),/<h2>見出し<\/h2>\n<ul>/);
+assert.match(convert('```html\n<p>code</p>\n```'),/&lt;p&gt;code&lt;\/p&gt;/);
+assert.ok(!convert('<img src=x onerror=alert(1)>').includes('<img'));
+assert.ok(!convert('[x](javascript:alert(1))').includes('href="javascript:'));
+assert.ok(!convert('一行目\n二行目\n\n三行目','all-br').includes('<p>'));
+assert.equal(convert('A\r\nB\rC'),convert('A\nB\nC'));
+console.log('8 conversion and HTML safety checks passed');
+const fs=require('node:fs');
+const sample=fs.readFileSync(require('node:path').join(__dirname,'../sample.md'),'utf8');
+const html=convert(sample);
+assert.equal((html.match(/<a /g)||[]).length,10);
+assert.equal((html.match(/<br>/g)||[]).length,9);
+assert.ok(!html.includes('<p>'));
+assert.ok(html.includes('[10] <a href="https://note.com">https://note.com</a>'));
+assert.equal(convert('A\n\nB'),'A<br>\n<br>\nB');
+assert.equal(convert('A\n\n\nB'),'A<br>\n<br>\n<br>\nB');
+assert.equal(convert('\nA\n'),'<br>\nA<br>\n');
+
+console.log('User sample: 10 links, 9 BR, no P; blank and trailing lines verified');
