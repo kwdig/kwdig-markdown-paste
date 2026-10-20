@@ -1,0 +1,1 @@
+(function(wp){'use strict';if(!wp.plugins||!wp.editPost||!wp.editPost.PluginMoreMenuItem)return;wp.plugins.registerPlugin('markdown-paste-linebreaks',{render:function(){return wp.element.createElement(wp.editPost.PluginMoreMenuItem,{icon:'clipboard',onClick:function(){window.MPLBOpen();}},'Markdown貼り付け');}});})(window.wp);
