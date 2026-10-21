@@ -15,6 +15,28 @@ WordPressにMarkdownを貼り付ける際、通常の改行が別々の段落に
 ブロックエディターは選択したブロックの後ろへ挿入し、既存ブロックを置き換えません。
 クラシックエディターのテキストタブではHTMLとして挿入します。
 
+## 使い方のスクリーンショット
+
+### クラシックエディター
+
+本文上の「Markdown貼り付け」ボタンをクリックします。
+
+![クラシックエディターのMarkdown貼り付けボタン](https://kwdig.com/wp-content/uploads/2026/10/mplb-howto-classic.png)
+
+### ブロックエディター
+
+右上の「︙」メニューから「Markdown貼り付け」を選択します。
+
+![ブロックエディターのMarkdown貼り付けメニュー](https://kwdig.com/wp-content/uploads/2026/10/mplb-howto-block-menu.png)
+
+### Markdownの貼り付けと挿入
+
+ダイアログにMarkdownを貼り付け、「すべての改行を`<br>`にする」を選んだ状態で変換結果を確認し、「記事へ挿入」をクリックします。
+
+![すべての改行をbrに変換する設定と変換後HTML](https://kwdig.com/wp-content/uploads/2026/10/mplb-howto-conversion.png)
+
+詳しい操作方法は[KwDig Markdown Pasteの紹介記事](https://kwdig.com/kwdig-markdown-paste)をご覧ください。
+
 ## 改行ルール
 既定：通常の改行も空行も `<br>` に変換します。空行1行は `<br>` 2個になります。
 チェックを外すと、空行のみ段落の区切り（`<p>`）になります。
@@ -36,7 +58,7 @@ Markdown中の生HTMLは文字として表示し、実行しません。
 別の段落
 ```
 
-既定の「すべての改行を<br>にする」では、段落の囲みを省略します。
+既定の「すべての改行を`<br>`にする」では、段落の囲みを省略します。
 ブロックエディターではそのモードはカスタムHTMLブロックで挿入します。
 クラシックのビジュアルエディターやWordPressの自動整形によって外側のpが補われることがあります。
 通常の文章全体を包むpはWordPressの標準動作で、行ごとにpが付く問題とは区別してください。
