@@ -1,4 +1,4 @@
-# KwDig Markdown Paste 1.0.1
+# KwDig Markdown Paste 1.0.2
 
 WordPressにMarkdownを貼り付ける際、通常の改行が別々の段落になるのを避けるためのプラグインです。
 
@@ -74,5 +74,9 @@ kwdig.comのクラシック／ブロック両エディターで、専用ボタ�
 ## ライセンス
 プラグイン独自コード：GPL-2.0-or-later。
 同梱markdown-it 14.1.0：MIT。ライセンス全文は assets/vendor/markdown-it-LICENSE.txt を参照。
+
+## 更新内容
+
+1.0.2：READMEにクラシックエディター・ブロックエディターの使い方と変換画面のスクリーンショット、紹介記事へのリンクを追加。
 
 1.0.1：すべての改行をbrにするモードを既定に変更。連続した空行を維持。sample.mdの番号付きリンク10件で検証。
