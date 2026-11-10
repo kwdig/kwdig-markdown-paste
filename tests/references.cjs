@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const convert=require('../assets/converter.js')(require('../assets/vendor/markdown-it.min.js'));
+const urls=['https://schema.org','https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data','https://schema.org/FAQPage','https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data','https://developers.google.com/search/updates','https://developers.google.com/search/docs/appearance/structured-data/sd-policies','https://developers.google.com/search/docs/appearance/structured-data/breadcrumb','https://developers.google.com/search/docs/appearance/structured-data/article','https://developers.google.com/search/docs/appearance/structured-data/article','https://developers.google.com/search/docs/appearance/structured-data/breadcrumb','https://developers.google.com/search/docs/appearance/structured-data/sd-policies','https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data','https://developers.google.com/search/docs/appearance/structured-data/article'];
+const source=urls.map((url,i)=>i===0?String.raw`[1] [https\://schema.org]\(https\://schema.org)`:String.raw`[${i+1}] [[${url}\](${url})](${url}]\(${url}\))`).join('\n\n');
+const html=convert(source,'all-br');assert.equal((html.match(/<a /g)||[]).length,13);assert.equal((html.match(/<br>/g)||[]).length,24);
+urls.forEach((u,i)=>assert.ok(html.includes(`[${i+1}] <a href="${u}">${u}</a>`)));
+assert.ok(!html.includes('%5D'));assert.ok(!html.includes('<p>'));
+const safe='[1] [[https://a.example](https://a.example)](https://b.example)';
+assert.ok(convert(safe).includes('https://b.example'));
+assert.ok(convert('```\n'+source+'\n```').includes('https\\://schema.org'));
+assert.ok(convert('    [1] [https\\://schema.org]\\(https\\://schema.org)').includes('https\\://schema.org'));
+assert.ok(!convert('[1] [javascript:alert(1)](javascript:alert(1))').includes('href="javascript:'));
+require('node:fs').writeFileSync(require('node:path').join(__dirname,'reference-sample.md'),source);
+console.log('13 malformed references repaired; 24 BR; code/other URLs/security preserved');

@@ -1,10 +1,17 @@
-[1] [https://www.sba.ac.jp](https://www.sba.ac.jp)
-[2] [https://dxpo.jp](https://dxpo.jp)
-[3] [https://innova-jp.com](https://innova-jp.com)
-[4] [https://qiita.com](https://qiita.com)
-[5] [https://ja.wikipedia.org](https://ja.wikipedia.org)
-[6] [https://www.ibm.com](https://www.ibm.com)
-[7] [https://resources.rework.com](https://resources.rework.com)
-[8] [https://www.reddit.com](https://www.reddit.com)
-[9] [https://jp.linkedin.com](https://jp.linkedin.com)
-[10] [https://note.com](https://note.com)
+## 改行仕様の例
+
+通常改行の1行目
+通常改行の2行目
+
+明示的改行の1行目  
+明示的改行の2行目
+
+空行の前の段落
+
+空行の後の段落
+
+## 出典
+
+[1] [Schema.org](https://schema.org/)  
+[2] [BlogPosting](https://schema.org/BlogPosting)  
+[3] [Google公式資料](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)

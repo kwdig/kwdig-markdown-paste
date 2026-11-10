@@ -1,0 +1,11 @@
+{
+  "name": "kwdig-markdown-paste",
+  "version": "1.0.7",
+  "private": true,
+  "scripts": {
+    "test": "node tests/standard.cjs && node tests/references.cjs && node tests/auto-paste.cjs && node tests/docs-standard.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "31.0.0"
+  }
+}

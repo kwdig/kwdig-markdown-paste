@@ -1,0 +1,14 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const root=path.join(__dirname,'../integrations/google-docs');let richCalls=0;
+const ctx=vm.createContext({richBodyHtml_:items=>{richCalls+=items.length;return '<native>preserved</native>';}});
+vm.runInContext(fs.readFileSync(path.join(root,'Markdown.gs'),'utf8'),ctx);
+vm.runInContext(fs.readFileSync(path.join(root,'MarkdownDocsAdapter.gs'),'utf8'),ctx);
+const p=(content,textStyle={},namedStyleType='NORMAL_TEXT')=>({paragraph:{elements:[{textRun:{content,textStyle}}],paragraphStyle:{namedStyleType}}});
+assert.equal(ctx.bodyHtml_([p('通常1\n'),p('通常2\n')],{}),'<p>通常1 通常2</p>\n');
+assert.equal(ctx.bodyHtml_([p('明示1  \n'),p('明示2\n')],{}),'<p>明示1<br>\n明示2</p>\n');
+assert.equal(ctx.bodyHtml_([p('段落1\n'),p('\n'),p('段落2\n')],{}),'<p>段落1</p>\n<p>段落2</p>\n');
+const refs=ctx.bodyHtml_([p('## 出典\n'),p('\n'),p('[1] [公式](https://schema.org/)  \n'),p('[2] [型](https://schema.org/BlogPosting)\n')],{});
+assert.equal((refs.match(/<h2>/g)||[]).length,1);assert.equal((refs.match(/<a /g)||[]).length,2);assert.equal((refs.match(/<br>/g)||[]).length,1);
+assert.equal(ctx.bodyHtml_([p('見出し\n',{},'HEADING_2'),p('太字\n',{bold:true}),p('リンク\n',{link:{url:'https://schema.org/'}})],{}),'<native>preserved</native>');assert.equal(richCalls,3);
+assert.ok(!ctx.markdownHtml_('<script>x</script>').includes('<script>'));
+console.log('GAS integration: standard breaks, headings, references, native serializer delegation and HTML safety passed');
